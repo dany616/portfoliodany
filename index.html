@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장민종 | 개발자 포트폴리오</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chosen Palette: Calm Tech -->
+    <!-- Application Structure Plan: A single-page, vertically-scrolling portfolio. A sticky navigation bar allows for quick jumps between thematic sections: Home, About, Skills, Projects, and a unified Timeline (Experience & Education). This structure guides the user from a high-level introduction to in-depth project details and a chronological career overview, which is more intuitive and narrative-driven than a simple resume recreation. Key interaction is the project filter, allowing users to focus on specific areas of expertise (e.g., AI, Web Dev). -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Skill List -> Goal: Inform/Organize -> Viz/Method: Categorized HTML/CSS tags -> Interaction: Subtle hover effect -> Justification: More direct and scannable for recruiters than a subjective chart. -> Library/Method: HTML/Tailwind.
+        - Report Info: Project List -> Goal: Organize/Compare -> Viz/Method: Grid of filterable project cards -> Interaction: JS-powered category filters and click-to-open modal for details -> Justification: Allows users to quickly find relevant projects and drill down for more info, a standard and effective UX pattern. -> Library/Method: Vanilla JS, HTML/Tailwind.
+        - Report Info: Experience, Education, Activities -> Goal: Show Change/Progression -> Viz/Method: Vertical timeline with distinct icons -> Interaction: Hover animations -> Justification: Creates a compelling visual narrative of career growth. -> Library/Method: HTML/Tailwind.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        :root {
+            --bg-color: #F8FAFC;
+            --text-primary: #1E293B;
+            --text-secondary: #475569;
+            --accent-color: #14B8A6;
+            --card-bg: #FFFFFF;
+            --border-color: #E2E8F0;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Pretendard', sans-serif;
+        }
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+        .nav-link.active {
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+        .project-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            cursor: pointer;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: -31px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            border: 4px solid var(--accent-color);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header id="header" class="bg-white/80 backdrop-blur-md sticky top-0 z-40 transition-all duration-300 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-xl font-bold text-slate-800">장민종</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="nav-link text-slate-600 hover:text-teal-500 transition-colors">소개</a>
+                <a href="#skills" class="nav-link text-slate-600 hover:text-teal-500 transition-colors">기술</a>
+                <a href="#projects" class="nav-link text-slate-600 hover:text-teal-500 transition-colors">프로젝트</a>
+                <a href="#timeline" class="nav-link text-slate-600 hover:text-teal-500 transition-colors">여정</a>
+            </div>
+            <a href="mailto:dany169190@gmail.com" class="hidden md:block bg-teal-500 text-white px-4 py-2 rounded-md hover:bg-teal-600 transition-colors">연락하기</a>
+             <button id="mobile-menu-button" class="md:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-white">
+            <a href="#about" class="block text-center py-2 text-slate-600 hover:bg-slate-100">소개</a>
+            <a href="#skills" class="block text-center py-2 text-slate-600 hover:bg-slate-100">기술</a>
+            <a href="#projects" class="block text-center py-2 text-slate-600 hover:bg-slate-100">프로젝트</a>
+            <a href="#timeline" class="block text-center py-2 text-slate-600 hover:bg-slate-100">여정</a>
+            <a href="mailto:dany169190@gmail.com" class="block text-center py-4 bg-slate-50 text-teal-500 font-semibold hover:bg-slate-100">연락하기</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+        <section id="home" class="min-h-[calc(100vh-68px)] flex items-center">
+            <div class="w-full text-center md:text-left">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-slate-800 leading-tight">
+                    안녕하세요,<br>
+                    <span class="text-teal-500">장민종</span>입니다.
+                </h1>
+                <p class="mt-6 text-xl text-slate-600 max-w-2xl mx-auto md:mx-0">
+                    사용자에게 참신함과 즐거움을 주는 제품을 만드는 개발자입니다.<br>
+                    문제의 본질을 파고들어 실질적인 변화를 만드는 과정을 즐깁니다.
+                </p>
+                <div class="mt-10 flex gap-4 justify-center md:justify-start">
+                    <a href="#projects" class="bg-teal-500 text-white px-8 py-3 rounded-md text-lg font-semibold hover:bg-teal-600 transition-transform hover:scale-105">
+                        프로젝트 보기
+                    </a>
+                    <a href="#timeline" class="bg-slate-200 text-slate-700 px-8 py-3 rounded-md text-lg font-semibold hover:bg-slate-300 transition-transform hover:scale-105">
+                        성장 과정
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-20 md:py-32">
+             <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-slate-800">소개</h2>
+                <p class="mt-4 text-lg text-slate-500">저는 이런 가치를 가지고 개발에 임합니다.</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="text-4xl text-teal-500 mb-4"><i class="fas fa-search"></i></div>
+                    <h3 class="text-2xl font-semibold mb-2">문제 본질 포착</h3>
+                    <p class="text-slate-600">문제의 핵심을 빠르게 파악하고, 공감에서 출발하여 실질적인 해결책을 찾는 것을 중요하게 생각합니다.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="text-4xl text-teal-500 mb-4"><i class="fas fa-lightbulb"></i></div>
+                    <h3 class="text-2xl font-semibold mb-2">호기심과 탐구</h3>
+                    <p class="text-slate-600">'왜?'라는 질문을 놓치지 않고 작동 원리를 탐구하여 개선점을 찾는 과정 자체에서 큰 즐거움을 느낍니다.</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="text-4xl text-teal-500 mb-4"><i class="fas fa-share-alt"></i></div>
+                    <h3 class="text-2xl font-semibold mb-2">지식 공유의 책임</h3>
+                    <p class="text-slate-600">변화를 만들어냈다면, 그 지식과 경험을 필요한 사람에게 전달하는 것 또한 개발자의 중요한 책임이라 믿습니다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20 md:py-32 bg-slate-100 -mx-6 px-6">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-slate-800">기술 스택</h2>
+                    <p class="mt-4 text-lg text-slate-500">다양한 기술을 활용하여 아이디어를 현실로 만듭니다.</p>
+                </div>
+                <div class="max-w-4xl mx-auto space-y-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-semibold text-slate-700 mb-4">Languages</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="bg-teal-100 text-teal-800 px-4 py-1 rounded-full font-medium">Python</span>
+                            <span class="bg-teal-100 text-teal-800 px-4 py-1 rounded-full font-medium">JavaScript</span>
+                            <span class="bg-teal-100 text-teal-800 px-4 py-1 rounded-full font-medium">C</span>
+                        </div>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-semibold text-slate-700 mb-4">Frameworks & Libraries</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full font-medium">React</span>
+                            <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full font-medium">FastAPI</span>
+                             <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full font-medium">Next.js</span>
+                            <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full font-medium">Node.js</span>
+                            <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full font-medium">Pandas</span>
+                            <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full font-medium">NumPy</span>
+                        </div>
+                    </div>
+                     <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-semibold text-slate-700 mb-4">Tools, Platforms & Databases</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="bg-indigo-100 text-indigo-800 px-4 py-1 rounded-full font-medium">Docker</span>
+                             <span class="bg-indigo-100 text-indigo-800 px-4 py-1 rounded-full font-medium">PostgreSQL</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-4 py-1 rounded-full font-medium">Tableau</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-4 py-1 rounded-full font-medium">Whisper</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-4 py-1 rounded-full font-medium">LangGraph</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-4 py-1 rounded-full font-medium">Qwen</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 md:py-32">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-slate-800">프로젝트</h2>
+                <p class="mt-4 text-lg text-slate-500">문제 해결을 위해 진행했던 프로젝트들입니다. 카드를 클릭하여 상세 내용을 확인하세요.</p>
+            </div>
+            <div id="project-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+        </section>
+
+        <section id="timeline" class="py-20 md:py-32">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-slate-800">성장 여정</h2>
+                <p class="mt-4 text-lg text-slate-500">저의 지식과 경험이 어떻게 쌓여왔는지 보여드립니다.</p>
+            </div>
+            <div class="relative max-w-2xl mx-auto border-l-2 border-teal-200 pl-8">
+                <div id="timeline-container" class="space-y-12">
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-slate-800 text-white mt-20">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>&copy; 2025 Chang Minjong. All Rights Reserved.</p>
+            <p class="mt-2">본 페이지는 포트폴리오 웹사이트입니다.</p>
+        </div>
+    </footer>
+
+    <div id="project-modal" class="fixed inset-0 bg-black bg-opacity-70 hidden items-center justify-center p-4 z-50 opacity-0 transition-opacity duration-300 ease-in-out">
+        <div id="modal-content" class="bg-white rounded-lg shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative opacity-0 scale-95 transition-all duration-300 ease-in-out">
+            <button id="modal-close-btn" class="absolute top-3 right-4 text-gray-400 hover:text-gray-800 text-3xl font-light z-10">&times;</button>
+            <div class="p-0">
+                <img id="modal-image" src="" alt="프로젝트 이미지" class="w-full h-auto object-contain rounded-t-lg bg-slate-100" style="max-height: 50vh;">
+                <div class="p-6 md:p-8">
+                    <h3 id="modal-title" class="text-2xl md:text-3xl font-bold text-slate-800 mb-2"></h3>
+                    <p id="modal-date" class="text-sm text-slate-500 mb-4"></p>
+                    <div id="modal-desc" class="text-slate-600 space-y-3 prose max-w-none"></div>
+                    <div id="modal-tags" class="mt-6 flex flex-wrap gap-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const projects = [
+            {
+                title: '유튜브 영상 감정분석 대시보드',
+                date: '2025.05 - 진행 중',
+                desc: '유튜브 영상의 멀티모달 감정 분석 결과를 시각화하는 대시보드.',
+                longDesc: `
+                    <img src="images/youtube.png" alt="유튜브 감정분석 대시보드" class="w-full h-auto rounded-lg mb-4">
+                    <p>유튜브 영상의 링크를 입력하면, 해당 영상에 대한 감정 분석 결과를 시각적으로 확인할 수 있는 대시보드 서비스를 개발 중입니다.</p>
+                    <p>기존에는 단순 음성 인식 기반의 감정 분석 서비스가 많았지만, 본 프로젝트에서는 LangGraph 기반 워크플로우를 활용해 멀티모달 감정 분석 모델을 결합함으로써 보다 정교한 분석이 가능하도록 설계하였습니다.</p>
+                    <p>전체 파이프라인은 다음과 같습니다:</p>
+                    <ol class="list-decimal list-inside ml-4 mt-2 space-y-1">
+                        <li>Whisper 모델을 사용하여 영상의 음성을 텍스트로 변환</li>
+                        <li>하이라이트 구간을 자동 추출</li>
+                        <li>추출된 하이라이트에 대해 Emotion-Qwen (Qwen2.5-VL) 모델을 사용한 멀티모달 감정 분석 수행</li>
+                        <li>결과를 Next.js 기반의 대시보드에 시각화</li>
+                    </ol>
+                `,
+                tags: ['Python', 'TypeScript', 'Next.js', 'FastAPI', 'Whisper', 'Qwen'],
+                imageUrl: 'https://placehold.co/800x450/14B8A6/FFFFFF?text=Emotion+Analysis'
+            },
+            {
+                title: '주식 분석 및 투자판단 프로그램',
+                date: '2025.04 - 2025.05',
+                desc: '기술적 분석을 자동화하여 객관적인 매매 신호를 생성하는 분석 도구.',
+                longDesc: `
+                    <img src="images/ana.png" alt="주식 분석 프로그램" class="w-full h-auto rounded-lg mb-4">
+                    <img src="images/ana1.png" alt="주식 분석 프로그램" class="w-full h-auto rounded-lg mb-4">
+                    <img src="images/ana2.png" alt="주식 분석 프로그램" class="w-full h-auto rounded-lg mb-4">
+
+                    <p>주식 데이터를 수집하고 기술적 분석을 자동화하여, 객관적인 매매 신호를 생성하고 시각화하는 프로그램입니다.</p>
+                    <p>Python으로 이동평균선, RSI 등 다양한 기술적 지표를 기반으로 '골든크로스', '데드크로스'와 같은 매매 전략을 구현한 후 해당 매매 전략을 과거 데이터를 이용한 백테스팅(Backtesting)을 통해 전략의 유효성을 검증합니다. 또한 AI투자분석문도 생성시킬수 있고 단기매수를 위한 일일봉, 5분봉 등을 형식에 맞춰서 넣으면 매수 분석도 진행해줍니다. 이를 통해 사용자가 데이터 기반의 투자 판단을 내리는 데 도움을 주는 분석 도구를 제공합니다.</p>
+                `,
+                tags: ['Python', 'Pandas', 'Numpy', 'Matplotlib', 'backtesting.py'],
+                imageUrl: 'https://placehold.co/800x450/0EA5E9/FFFFFF?text=Stock+Analysis'
+            },
+            {
+                title: 'Docker 기반 유저관리 서버',
+                date: '2024.10',
+                desc: 'Synology NAS와 Docker를 활용하여 REST API 기반 유저 관리 서버를 구축하고 웹에 배포했습니다.',
+                longDesc: `
+                    <img src="images/Docker.png" alt="Docker 기반 유저관리 서버" class="w-full h-auto rounded-lg mb-4">
+                    <p>개인용 Synology NAS를 활용하여 REST API 기반의 유저 관리 매니저 서버를 구축하고 배포한 프로젝트입니다.</p>
+                    <p>Node.js의 Express 프레임워크를 활용해 REST API를 직접 구현한 후, Docker 확장을 설치하여 API 서버를 컨테이너 환경에 배포하였습니다. 이를 통해 웹에서 접근 가능한 실 서비스 형태로 호스팅까지 완료하며 인프라 구축 및 운영 경험을 쌓았습니다.</p>
+                `,
+                tags: ['JavaScript', 'Node.js', 'Docker', 'REST API'],
+                imageUrl: 'https://placehold.co/800x450/8B5CF6/FFFFFF?text=Docker+Server'
+            },
+            {
+                title: 'Python 소켓 채팅 프로그램',
+                date: '2024.10 - 2024.11',
+                desc: '멀티스레딩을 활용한 실시간 TCP/IP 채팅 시스템.',
+                longDesc: `
+                    <p>Python의 소켓 프로그래밍과 멀티스레딩을 활용하여 구현한 실시간 채팅 시스템입니다. TCP/IP 기반 클라이언트-서버 아키텍처로 동시 다중 사용자 지원이 가능합니다.</p>
+                    <p>주요 기능은 다음과 같습니다:</p>
+                     <ul class="list-disc list-inside ml-4 mt-2 space-y-1">
+                        <li>브로드캐스트 메시징, 1:1 개인 대화, 그룹 채팅방</li>
+                        <li>Upstage Solar API를 연동한 AI 챗봇 기능</li>
+                        <li>JSON 기반 채팅 로그 시스템 및 키워드 검색</li>
+                        <li>14가지 명령어 체계를 갖춘 커스텀 메시지 프로토콜 설계</li>
+                    </ul>
+                `,
+                tags: ['Python', 'Socket', 'Multi-threading'],
+                imageUrl: 'https://placehold.co/800x450/F97316/FFFFFF?text=Socket+Chat'
+            },
+            {
+                title: '서울시 상가 데이터 시각화',
+                date: '2024.07 - 2024.08',
+                desc: '서울시 공공데이터를 활용하여 3년간의 상가 데이터 변화 추이를 분석하고 시각화했습니다.',
+                longDesc: `
+                    <img src="images/seoul.png" alt="서울시 상가 데이터 시각화" class="w-full h-auto rounded-lg mb-4">
+                    <p>3년간의 서울시 행정구역별 상가 데이터 변화를 분석하고 R을 이용해 시각화한 프로젝트입니다.</p>
+                    <p>부동산 가격 상승 요인의 독립변수로서 상가 데이터 변화에 주목하여 프로젝트를 진행했습니다. 서울시 공공데이터 사이트에서 얻은 정보를 활용하였고, 상가 수가 가장 많은 동 상위 10개, 업종별 점포 수 변화 등을 그래프로 시각화하여 인사이트를 도출하고자 했습니다.</p>
+                `,
+                tags: ['R', 'Data Visualization'],
+                imageUrl: 'https://placehold.co/800x450/EC4899/FFFFFF?text=Data+Viz'
+            },
+        ];
+
+        const projectGrid = document.getElementById('project-grid');
+        projects.forEach((p, index) => {
+            const card = document.createElement('div');
+            card.className = 'project-card bg-white rounded-lg shadow-md overflow-hidden flex flex-col';
+            card.setAttribute('data-index', index);
+            let tagsHtml = p.tags.map(tag => `<span class="bg-slate-200 text-slate-700 px-3 py-1 text-sm rounded-full">${tag}</span>`).join(' ');
+            card.innerHTML = `
+                <div class="p-6 flex-grow">
+                    <p class="text-sm text-slate-500 mb-1">${p.date}</p>
+                    <h3 class="text-xl font-bold text-slate-800 mb-3">${p.title}</h3>
+                    <p class="text-slate-600 mb-4 text-base flex-grow">${p.desc}</p>
+                </div>
+                <div class="p-6 bg-slate-50">
+                    <div class="flex flex-wrap gap-2">
+                        ${tagsHtml}
+                    </div>
+                </div>
+            `;
+            projectGrid.appendChild(card);
+        });
+        
+        const timelineEvents = [
+            { year: '2025', title: 'LPI Linux Essentials 취득', icon: 'fa-solid fa-award', type: 'certification' },
+            { year: '2024', title: 'LG AIMERS 5기 수료', desc: 'LG AI연구원 주관 AI 교육 프로그램 수료 및 해커톤 F1 Score 0.6 이상 달성.', icon: 'fa-solid fa-rocket', type: 'activity' },
+            { year: '2023', title: 'GTQ 1급 취득', icon: 'fa-solid fa-award', type: 'certification' },
+            { year: '2021-2022', title: '공군 29전술개발훈련전대 복무', desc: '실시간 GIS/GPS 데이터 기반 3D 전투기 시현 시스템(ACMI) 운용.', icon: 'fa-solid fa-jet-fighter', type: 'experience' },
+            { year: '2020', title: '정보처리기능사 취득', icon: 'fa-solid fa-award', type: 'certification' },
+            { year: '2019', title: '한국성서대학교 입학', desc: '컴퓨터소프트웨어학과', icon: 'fa-solid fa-graduation-cap', type: 'education' },
+            { year: '2018', title: '숭실고등학교 해커경진대회 운영', desc: '교내 해킹 대회 문제 출제 및 운영위원으로 활동.', icon: 'fa-solid fa-users', type: 'activity' },
+        ];
+        
+        const timelineContainer = document.getElementById('timeline-container');
+        timelineEvents.forEach(e => {
+            const item = document.createElement('div');
+            item.className = 'relative timeline-item';
+            item.innerHTML = `
+                <div class="ml-10 bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-shadow">
+                    <span class="absolute -left-3.5 top-1/2 -translate-y-1/2 text-2xl text-teal-500"><i class="${e.icon}"></i></span>
+                    <p class="text-sm font-semibold text-teal-600 mb-1">${e.year}</p>
+                    <h4 class="text-lg font-bold text-slate-800">${e.title}</h4>
+                    ${e.desc ? `<p class="mt-2 text-slate-600">${e.desc}</p>` : ''}
+                </div>
+            `;
+            timelineContainer.appendChild(item);
+        });
+
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('main section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        const modal = document.getElementById('project-modal');
+        const modalContent = document.getElementById('modal-content');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalImage = document.getElementById('modal-image');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDate = document.getElementById('modal-date');
+        const modalDesc = document.getElementById('modal-desc');
+        const modalTags = document.getElementById('modal-tags');
+
+        const openModal = (index) => {
+            const project = projects[index];
+            modalImage.src = project.imageUrl;
+            modalImage.alt = `${project.title} 프로젝트 이미지`;
+            modalTitle.textContent = project.title;
+            modalDate.textContent = project.date;
+            modalDesc.innerHTML = project.longDesc;
+            modalTags.innerHTML = project.tags.map(tag => `<span class="bg-slate-200 text-slate-700 px-3 py-1 text-sm rounded-full">${tag}</span>`).join(' ');
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            requestAnimationFrame(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('opacity-0', 'scale-95');
+            });
+        };
+
+        const closeModal = () => {
+            modal.classList.add('opacity-0');
+            modalContent.classList.add('opacity-0', 'scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.style.overflow = '';
+            }, 300);
+        };
+
+        projectGrid.addEventListener('click', (e) => {
+            const card = e.target.closest('.project-card');
+            if (card) {
+                const index = card.getAttribute('data-index');
+                openModal(index);
+            }
+        });
+
+        modalCloseBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+        
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+    });
+    </script>
+</body>
+</html>
